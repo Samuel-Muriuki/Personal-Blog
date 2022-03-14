@@ -1,0 +1,9 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, TextAreaField, SubmitField,SelectField
+from wtforms.validators import DataRequired
+
+class BlogForm(FlaskForm):
+
+    blog_title = StringField('Blog title',validators=[DataRequired()])
+    content = TextAreaField('Text',validators=[DataRequired()])
+    submit = SubmitField('Submit')
