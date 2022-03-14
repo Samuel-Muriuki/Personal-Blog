@@ -123,3 +123,14 @@ def delete(id):
     db.session.commit()
  
     return redirect(url_for('main.blogger'))
+
+@main.route('/delete_comment/<int:comment_id>', methods=['GET', 'POST'])
+@login_required
+def delete_comment(comment_id):
+    comment =Comment.query.get_or_404(comment_id)
+    if (comment.user.id) != current_user.id:
+        abort(403)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Succesfully deleted the Comment!!')
+    return redirect (url_for('main.blogger'))
