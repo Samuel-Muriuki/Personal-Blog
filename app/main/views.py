@@ -112,3 +112,14 @@ def update_blog(id):
         form.blog_title.data = blog.blog_title
         form.content.data = blog.content
     return render_template('update_blog.html', form=form)
+
+@main.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    blog = Blog.query.get_or_404(id)
+    if blog.user != current_user:
+        abort(403)
+    db.session.delete(blog)
+    db.session.commit()
+ 
+    return redirect(url_for('main.blogger'))
