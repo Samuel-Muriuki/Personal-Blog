@@ -88,7 +88,7 @@ def blogs():
 
         #Updating the Blog instance
         new_blog = Blog(title_blog=title_blog,blog_content=blog_content,user=current_user)
-
+        
         # Saving the blog method
         new_blog.save_blog()
         return redirect(url_for('main.blogger'))

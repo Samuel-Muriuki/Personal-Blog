@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 class BlogForm(FlaskForm):
 
     title_blog = StringField('Blog title',validators=[DataRequired()])
-    blog_content = TextAreaField('Text',validators=[DataRequired()])
+    blog_content = TextAreaField('Write a Blog',validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class CommentForm(FlaskForm):
