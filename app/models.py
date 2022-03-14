@@ -70,3 +70,29 @@ class Blog(db.Model):
         return blog
     def __repr__(self):
         return f'Blog {self.blog_content}'
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer,primary_key = True)
+    comment = db.Column(db.String(500))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id", ondelete= 'CASCADE'))
+    blog_id = db.Column(db.Integer,db.ForeignKey("blog.id", ondelete= 'CASCADE'))
+    pitch = db.Column(db.Integer,db.ForeignKey("pitch.id"))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+        
+
+    @classmethod
+    def get_comments(cls,pitch):
+        comments = Comment.query.filter_by(pitch_id=pitch).all()
+        return comments
+    
+    def delete_comment(self):
+        db.session.delete(self)
+        db.session.commit()
+        
+    def __repr__(self):
+        return f'Comments: {self.comment}'
