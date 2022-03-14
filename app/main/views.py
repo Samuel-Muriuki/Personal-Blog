@@ -19,3 +19,13 @@ def index():
     blogs = get_blogs()
 
     return render_template('index.html',title = title,blogs = blogs)
+
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    # pitch_count = Pitch.pitch_number(uname)
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
