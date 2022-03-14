@@ -42,7 +42,7 @@ class Blog(db.Model):
     __tablename__ = 'blog'
 
     id = db.Column(db.Integer,primary_key = True)
-    pitch_title = db.Column(db.String)
+    title_blog = db.Column(db.String)
     blog_content = db.Column(db.String(1000))
     category = db.Column(db.String)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
@@ -78,7 +78,7 @@ class Comment(db.Model):
     comment = db.Column(db.String(500))
     user_id = db.Column(db.Integer,db.ForeignKey("users.id", ondelete= 'CASCADE'))
     blog_id = db.Column(db.Integer,db.ForeignKey("blog.id", ondelete= 'CASCADE'))
-    pitch = db.Column(db.Integer,db.ForeignKey("pitch.id"))
+    blog = db.Column(db.Integer,db.ForeignKey("blog.id"))
 
     def save_comment(self):
         db.session.add(self)
@@ -86,8 +86,8 @@ class Comment(db.Model):
         
 
     @classmethod
-    def get_comments(cls,pitch):
-        comments = Comment.query.filter_by(pitch_id=pitch).all()
+    def get_comments(cls,blog):
+        comments = Comment.query.filter_by(blog_id=blog).all()
         return comments
     
     def delete_comment(self):

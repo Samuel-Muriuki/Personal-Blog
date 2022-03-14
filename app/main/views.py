@@ -23,7 +23,6 @@ def index():
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
-    # pitch_count = Pitch.pitch_number(uname)
 
     if user is None:
         abort(404)
