@@ -78,3 +78,37 @@ def view(id):
 def blogger():
     blogs = Blog.query.all()
     return render_template('blogger.html', blogs=blogs)
+
+@main.route('/blog/new', methods = ['GET','POST'])
+@login_required
+def blogs():
+    blog_form = BlogForm()
+    if blog_form.validate_on_submit():
+        title = blog_form.title.data
+        content = blog_form.content.data
+        new_blog = Blog(blog_title=title,content=content,user=current_user)
+
+        # Saving the blog method
+        new_blog.save_blog()
+        return redirect(url_for('main.blogger'))
+    title = 'Blog'
+    return render_template('blogs.html',title = title,blog_form=blog_form )
+
+
+@main.route('/Update/<int:id>', methods=['GET', 'POST'])
+@login_required
+def update_blog(id):
+    blog = Blog.query.get_or_404(id)
+    if blog.user != current_user:
+        abort(403)
+    form = BlogForm()
+    if form.validate_on_submit():
+        blog.blog_title = form.blog_title.data
+        blog.content = form.content.data
+        db.session.commit()
+
+        return redirect(url_for('main.blogger'))
+    elif request.method == 'GET':
+        form.blog_title.data = blog.blog_title
+        form.content.data = blog.content
+    return render_template('update_blog.html', form=form)
