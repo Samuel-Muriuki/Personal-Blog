@@ -61,3 +61,20 @@ def update_pic(uname):
 
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/view/<int:id>', methods=['GET', 'POST'])
+@login_required
+def view(id):
+    blog = Blog.query.get_or_404(id)
+    blog_comments = Comment.query.filter_by(blog_id=id).all()
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(blog_id=id, comment=comment_form.comment.data, user=current_user)
+        new_comment.save_comment()
+    return render_template('view.html', blog=blog, blog_comments=blog_comments, comment_form=comment_form)
+
+@main.route('/blog/allblogs', methods=['GET', 'POST'])
+@login_required
+def blogger():
+    blogs = Blog.query.all()
+    return render_template('blogger.html', blogs=blogs)
