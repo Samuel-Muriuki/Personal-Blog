@@ -37,3 +37,36 @@ class User(UserMixin,db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+
+class Blog(db.Model):
+    __tablename__ = 'blog'
+
+    id = db.Column(db.Integer,primary_key = True)
+    pitch_title = db.Column(db.String)
+    blog_content = db.Column(db.String(1000))
+    category = db.Column(db.String)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'), nullable=False)
+
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_blog(cls,category):
+        blog = Blog.query.filter_by(category=category).all()
+        return blog
+
+    @classmethod
+    def get_blog(cls,id):
+        blog = Blog.query.filter_by(id = id).first()
+
+        return blog
+
+    @classmethod
+    def get_all_blogs(cls):
+        blog = Blog.query.order_by('-id').all()
+        return blog
+    def __repr__(self):
+        return f'Blog {self.blog_content}'
