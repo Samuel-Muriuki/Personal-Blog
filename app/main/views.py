@@ -83,15 +83,17 @@ def blogger():
 def blogs():
     blog_form = BlogForm()
     if blog_form.validate_on_submit():
-        title = blog_form.title.data
-        content = blog_form.content.data
-        new_blog = Blog(blog_title=title,content=content,user=current_user)
+        title_blog = blog_form.title_blog.data
+        blog_content = blog_form.blog_content.data
+
+        #Updating the Blog instance
+        new_blog = Blog(title_blog=title_blog,blog_content=blog_content,user=current_user)
 
         # Saving the blog method
         new_blog.save_blog()
         return redirect(url_for('main.blogger'))
-    title = 'Blog'
-    return render_template('blogs.html',title = title,blog_form=blog_form )
+    title = 'The Blog'
+    return render_template('new_blog.html',title = title,blog_form=blog_form )
 
 
 @main.route('/Update/<int:id>', methods=['GET', 'POST'])
@@ -102,15 +104,15 @@ def update_blog(id):
         abort(403)
     form = BlogForm()
     if form.validate_on_submit():
-        blog.blog_title = form.blog_title.data
-        blog.content = form.content.data
+        blog.title_blog = form.title_blog.data
+        blog.blog_content = form.blog_content.data
         db.session.commit()
 
         return redirect(url_for('main.blogger'))
     elif request.method == 'GET':
-        form.blog_title.data = blog.blog_title
-        form.content.data = blog.content
-    return render_template('update_blog.html', form=form)
+        form.title_blog.data = blog.title_blog
+        form.blog_content.data = blog.blog_content
+    return render_template('update_blog.html', blog_form=form)
 
 @main.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required

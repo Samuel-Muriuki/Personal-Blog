@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% import 'macros.html' as macro %}
 <!-- Styles block -->
 
 {%block styles%}
@@ -13,13 +12,13 @@
 {%block content%}
 
 
-<div class="container">
-    <h1 class="head"><b>Welcome to the Blogging Website</b></h1>
+<div class="container" style="background-image: url(https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YmxvZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60); background-repeat: no-repeat; background-size: cover; height: 80vh;  background-position: center; border-radius: 20px;">
+    <h1 class="head text-primary"><b>Welcome to the Blogging Website</b></h1>
     <hr>
 
     <!-- Getting a random quote -->
     <div>
-        <p>{{blogs.quote}}</p>
+        <p class="text-white">{{blogs.quote}}</p>
                 
         <p class="text-right"><b> {{blogs.author}}</b> </p>
     </div>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{%import "bootstrap/wtf.html" as wtf%}
+
+<!-- Navbar block  -->
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+
+
+<div  class='container' style="background-image: url(https://media.istockphoto.com/photos/visual-contents-concept-social-networking-service-streaming-video-picture-id1289323170?b=1&k=20&m=1289323170&s=170667a&w=0&h=_mVTXluDgqHGZkvsG20yMKGBbPih4_sOSL_pqSnU0Qg=); background-repeat: no-repeat; background-size: cover; height: 80vh;  background-position: center;">
+    <h1 style="margin: 5%; text-align: center;">Add a blog</h1>
+    
+        <div class="col">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{wtf.quick_form(blog_form)}}
+                </div>
+        
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
